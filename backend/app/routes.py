@@ -47,7 +47,7 @@ def set_cache():
 @cross_origin()
 def generate_pdf():
     try:
-        pdfkit.from_string("Hello! Second Assignment from Ostad!", "/tmp/test.pdf")
+        pdfkit.from_string("Hello! Second Assignment", "/tmp/test.pdf")
         return send_file("/tmp/test.pdf", as_attachment=True)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

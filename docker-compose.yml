@@ -1,0 +1,55 @@
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data 
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+
+# a. Backend:
+# i. Need the environment variables from the .env file.
+# ii. Expose 5000 internal port to host machine’s 5000 port.
+# b. Frontend:
+# i. Expose 5173 internal port to host machine’s 3000 port.
+# c. Database:
+# i. Use PostgreSQL for database
+# ii. Make sure data doesn’t go away on the container remove
+# iii. Make sure the database service isn’t exposed to the host
+# machine.
+
+# d. Redis:
+# i. Use Redis for caching
+# ii. Make sure to persist data on container removal.
+# iii. Make sure not to expose any port in the host machine.
+# 6. Use .dockerignore to ignore extra files that should not be copied
+# in the container.
+# 7. Build and test your application
