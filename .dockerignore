@@ -1,0 +1,29 @@
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+#frontend react
+frontend/node_modules
+frontend/build
+
+#backend flask
+backend/env/
+backend/build/
+backend/develop-eggs/
+backend/dist/
+
+# VS Code
+.vscode/
+
+# Virtual environment
+.env
+.venv/
+venv/
+
+# PyCharm
+.idea
+
+pgdata
+chache
